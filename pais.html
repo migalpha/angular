@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en"  ng-app="apiApp" ng-controller="apiAppCtrl">
+<head>
+	<meta charset="UTF-8">
+	<title>Países de{{region}}</title>
+<link rel="stylesheet" href="css/pais.css">
+<link href='http://fonts.googleapis.com/css?family=Raleway:500' rel='stylesheet' type='text/css'>
+</head>
+<body>
+	<div>
+  		<h1>Países de{{region}}</h1>
+  		<aside>
+       		<h2>Filtra:</h2>
+        	<input type="text" ng-model="filtroCliente">
+       		<h2>Orden</h2>
+        	<p>
+            	<button ng-click="orden=false">Ascendente</button>
+            	<br />
+            	<button ng-click="orden=true">Descendente</button>
+       		</p>
+       	 	<p>
+            	<input type="radio" name="campo" ng-model="campo" value="name"> Nombre
+            	<br />
+            	<input type="radio" name="campo" ng-model="campo" value="capital"> Capital
+              <br>
+              <input type="radio" name="campo" ng-model="campo" value="area"> Superficie
+              <br>
+              <input type="radio" name="campo" ng-model="campo" value="population"> Población
+        	</p>
+          <h2>Seleccione Continente:</h2>
+          <p>
+              <select ng-model="ruta" ng-change="buscaContinente()" ng-init='ruta = "http://restcountries.eu/rest/v1/all"'>
+                <option value="http://restcountries.eu/rest/v1/all">Mundo</option>
+                <option value="http://restcountries.eu/rest/v1/region/africa" selected>Africa</option>
+                <option value="http://restcountries.eu/rest/v1/region/americas">América</option>
+                <option value="http://restcountries.eu/rest/v1/region/asia">Asia</option>
+                <option value="http://restcountries.eu/rest/v1/region/europe">Europa</option>
+                <option value="http://restcountries.eu/rest/v1/region/oceania">Oceanía</option>
+                
+              </select>
+          </p>
+  		</aside>
+  		<section>
+    		<ul>
+     			<li ng-repeat="pais in paises | filter:filtroCliente | orderBy:campo:orden" ng-class="{even: $even, odd: $odd}">
+        			<span>{{$index +1}}.- {{pais.name}},</span>
+        			<span>Capital: {{ pais.capital }}</span>
+        			<span>Región: {{pais.region}}</span>
+        			<span>Sub-Región: {{ pais.subregion}}</span>
+        			<span>Población: {{ pais.population | number}} Hab.</span>
+        			<span>Superficie: {{ pais.area | number }} Km<sup>2</sup></span>
+      			</li>
+    		</ul>
+  		</section> 
+	</div>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.2/angular.js"></script>
+<script src="js/apppais.js"></script>
+<script src="js/controller/controllerpais.js"></script>
+</body>
+</html>
